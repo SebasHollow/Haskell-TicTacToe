@@ -10,5 +10,5 @@ msg4 = "l[m[\"x\"; 0; \"y\"; 1; \"v\"; \"x\"]; m[\"x\"; 1; \"y\"; 2; \"v\"; \"o\
 msg5 = "l[m[\"x\"; 2; \"y\"; 1; \"v\"; \"x\"]; m[\"x\"; 2; \"y\"; 0; \"v\"; \"o\"]; m[\"x\"; 0; \"y\"; 1; \"v\"; \"x\"]; m[\"x\"; 0; \"y\"; 0; \"v\"; \"o\"]; m[\"x\"; 1; \"y\"; 2; \"v\"; \"x\"]; m[\"x\"; 1; \"y\"; 1; \"v\"; \"o\"]; m[\"x\"; 1; \"y\"; 0; \"v\"; \"x\"]; m[\"x\"; 0; \"y\"; 2; \"v\"; \"o\"]]"
 
 move :: String -> (Maybe (Int, Int, Char))
-move s = getNewBoard list
+move s = getNextTurn list
     where list = parse s
