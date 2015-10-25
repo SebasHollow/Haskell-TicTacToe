@@ -6,36 +6,22 @@ import Data.List.Split
 
 -- parse all Members
 parse :: String -> [(Int, Int, Char)]
-parse str = m
-    where members = parseMems (delL str)
-          m = map parseM members
+parse str = map parseValue $ parseElems str
 
-delL :: String -> String
-delL ('l':_:xs) = init xs
-delL a = a
-
-parseMems :: String -> [String]
-parseMems str
+parseElems :: String -> [String]
+parseElems str
     | str == [] = []
     | otherwise = x
     where (_:x) = m
           m = splitOn "m" str
 
 -- parse a Member
-parseM :: String -> (Int, Int, Char)
-parseM string = toTuple (x:y:v:[])
-    where elems = splitOn " " string
-          (x:_) = get (elems !! 1)
-          (y:_) = get (elems !! 3)
-          v     = parseValue $ elems !! 5
-          get   = splitOn ";"
-
-parseValue :: String -> String
-parseValue str =
-    let
-        strArray = splitOn "\"" str
-    in
-        strArray !! 1
+parseValue :: String -> (Int, Int, Char)
+parseValue string = toTuple (x:y:v:[])
+    where elems = splitOn "; " string
+          x = (elems !! 1)
+          y = (elems !! 3)
+          (_:v:_) = splitOn "\"" $ elems !! 5
 
 toTuple :: [String] -> (Int, Int, Char)
 toTuple string = (x, y, c)
