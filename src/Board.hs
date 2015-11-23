@@ -3,24 +3,26 @@ module Board where
 import Data.List
 import Data.Maybe
 
-emptyBoard :: [(Int, Int, Char)]
+type Square = (Int, Int, Char)
+
+emptyBoard :: [Square]
 emptyBoard = [(x, y, ' ') | x <- [0..2], y <- [0..2]]
 
 -- Replace functions
-replaceChar :: (Int, Int, Char) -> Char -> (Int, Int, Char)
+replaceChar :: Square -> Char -> Square
 replaceChar (x, y, _) c = (x, y, c)
 
 replaceAt :: Int -> a -> [a] -> [a]
 replaceAt n item list = a ++ (item:b)
     where (a, (_:b)) = splitAt n list
 
-replaceTuple :: [(Int, Int, Char)] -> (Int, Int, Char) -> [(Int, Int, Char)]
+replaceTuple :: [Square] -> Square -> [Square]
 replaceTuple list tuple  = replaceAt i tuple list
     where (x, y, _) = tuple
           i = 3 * x + y
 
 
-getNextTurn :: [(Int, Int, Char)] -> Maybe (Int, Int, Char)
+getNextTurn :: [Square] -> Maybe Square
 getNextTurn positions = nextTurn
     where board = loadBoard emptyBoard positions
           i = getEmptyIndex board
@@ -29,7 +31,7 @@ getNextTurn positions = nextTurn
                         then Just $ replaceChar v (getTurn board)
                         else Nothing
 
-loadBoard :: [(Int, Int, Char)] -> [(Int, Int, Char)] -> [(Int, Int, Char)]
+loadBoard :: [Square] -> [Square] -> [Square]
 loadBoard board items
     | len == 0 = board
     | len == 1 = newBoard
@@ -38,7 +40,7 @@ loadBoard board items
           (h:hs) = items
           newBoard = replaceTuple board h
 
-getEmptyIndex :: [(Int, Int, Char)] -> Maybe Int
+getEmptyIndex :: [Square] -> Maybe Int
 getEmptyIndex list
     | null list = Nothing
     | c == ' ' = Just (0)
@@ -47,7 +49,7 @@ getEmptyIndex list
           (_, _, c) = (head list)
 
 
-getTurn :: [(Int, Int, Char)] -> Char
+getTurn :: [Square] -> Char
 getTurn board = if (o < x) then 'o' else 'x'
     where x = count 'x'
           o = count 'o'
