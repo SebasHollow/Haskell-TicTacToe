@@ -15,17 +15,8 @@ executable TicTacToe
   main-is:         Main.hs
   hs-source-dirs:  src
   build-depends:       base
-                     , utf8-string
-                     , containers
-                     , hedis
-                     , HTTP
                      , text
-                     , http-conduit
                      , split
-                     , blaze-html
-                     , blaze-markup
                      , http-client
                      , http-types
-                     , io-streams
-                     , aeson
   default-language:    Haskell2010
